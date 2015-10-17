@@ -26,7 +26,7 @@ public class LogicFactory {
         switch (cardsOnDesk) {
             case 0: {
                 if (currentBuyIn > chips / 4) {
-                    logicToreturn = new Logic(1, 1);
+                    logicToreturn = new Logic(29, 30);
                 } else {
                     if (bet > 0) {
                         logicToreturn = new Logic(0, 20);
@@ -35,13 +35,23 @@ public class LogicFactory {
                 break;
             }
             case 3: {
+                if (currentBuyIn > chips / 4) {
+                    logicToreturn = new Logic(29, 30);
+                }
                 break;
             }
             case 4: {
+                if (currentBuyIn > chips / 3) {
+                    logicToreturn = new Logic(29, 30);
+                }
                 break;
             }
             case 5: {
-                logicToreturn = new Logic(1, 20);
+                if (currentBuyIn > chips / 3) {
+                    logicToreturn = new Logic(29, 30);
+                } else {
+                    logicToreturn = new Logic(1, 20);
+                }
             }
         }
         return logicToreturn;
