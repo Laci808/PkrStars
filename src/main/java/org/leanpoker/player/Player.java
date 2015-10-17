@@ -6,40 +6,39 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "0.3";
+    static final String VERSION = "0.4";
     private static BetCalculator betCalculator;
 
     public static int betRequest(GameState gameState) {
-        com.wcs.poker.gamestate.Player me = getPlayer(gameState.getPlayers(), gameState.getInAction());
-        List<Card> allCard = me.getHoleCards();
+        List<Card> allCard = gameState.getActualPlayer().getHoleCards();
         allCard.addAll(gameState.getCommunityCards());
         betCalculator = new BetCalculator();
-        boolean shouldRaise = betCalculator.getCurrentBet(allCard);
-        int bet = 0;
-        if (shouldRaise) {
-            bet = getMinRaise(gameState, me);
-        } else {
-            bet = getCall(gameState, me);
-        }
-        return bet;
+        int value = betCalculator.getCurrentBet(allCard);
+        return calculateBetAmmount(LogicFactory.createLogic(gameState), value, gameState);
     }
 
     public static void showdown(GameState gameState) {
     }
 
-    private static com.wcs.poker.gamestate.Player getPlayer(List<com.wcs.poker.gamestate.Player> players, int inAction) {
-        return players.get(inAction);
+    private static int calculateBetAmmount(Logic logic, int value, GameState gameState) {
+        if (value < logic.getFoldingLimit()) {
+            return 0;
+        } else if (value < logic.getIntraiseLimit()) {
+            return getCall(gameState);
+        } else {
+            return getMinRaise(gameState);
+        }
     }
 
-    public static int getCall(GameState gameState, com.wcs.poker.gamestate.Player me) {
-        return getBetCount(gameState, me, 0);
+    public static int getCall(GameState gameState) {
+        return getBetCount(gameState, 0);
     }
 
-    public static int getMinRaise(GameState gameState, com.wcs.poker.gamestate.Player me) {
-        return getBetCount(gameState, me, gameState.getMinimumRaise());
+    public static int getMinRaise(GameState gameState) {
+        return getBetCount(gameState, gameState.getMinimumRaise());
     }
 
-    public static int getBetCount(GameState gameState, com.wcs.poker.gamestate.Player me, int additional) {
-        return gameState.getCurrentBuyIn() - me.getBet() + additional;
+    public static int getBetCount(GameState gameState, int additional) {
+        return gameState.getCurrentBuyIn() - gameState.getActualPlayer().getBet() + additional;
     }
 }

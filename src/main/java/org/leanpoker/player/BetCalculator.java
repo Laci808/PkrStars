@@ -22,17 +22,13 @@ public class BetCalculator {
         handValueCalculator = new HandValue();
     }
 
-    public boolean getCurrentBet(List<Card> cards) {
+    public int getCurrentBet(List<Card> cards) {
         List<Integer> cardValues = new ArrayList<>();
         for (Card card : cards) {
             cardValues.add(Cards.getValue(card.getRank()));
         }
         Integer handValue = handValueCalculator.getHandValue(cardValues);
-        if (handValue >= 10) {
-            return true;
-        } else {
-            return false;
-        }
+        return handValue;
     }
 
 }
