@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "0.5";
+    static final String VERSION = "0.6";
     private static BetCalculator betCalculator;
 
     public static int betRequest(GameState gameState) {
         betCalculator = new BetCalculator();
-        int value = betCalculator.getCurrentBet(gameState.getActualPlayer().getHoleCards(),gameState.getCommunityCards());
+        int value = betCalculator.getCurrentBet(gameState.getActualPlayer().getHoleCards(), gameState.getCommunityCards());
         return calculateBetAmmount(LogicFactory.createLogic(gameState), value, gameState);
     }
 
@@ -24,7 +24,7 @@ public class Player {
         } else if (value < logic.getIntraiseLimit()) {
             return getCall(gameState);
         } else {
-            return getMinRaise(gameState);
+            return getRaise(gameState, value / 10);
         }
     }
 
@@ -34,6 +34,10 @@ public class Player {
 
     public static int getMinRaise(GameState gameState) {
         return getBetCount(gameState, gameState.getMinimumRaise());
+    }
+
+    public static int getRaise(GameState gameState, int alpha) {
+        return getBetCount(gameState, alpha * gameState.getMinimumRaise());
     }
 
     public static int getBetCount(GameState gameState, int additional) {
