@@ -4,7 +4,7 @@ import com.wcs.poker.gamestate.GameState;
 
 public class Player {
 
-    static final String VERSION = "Default Java folding player";
+    static final String VERSION = "0.1";
 
     public static int betRequest(GameState gameState) {
         return 0;
