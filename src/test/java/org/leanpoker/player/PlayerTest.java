@@ -37,7 +37,7 @@ public class PlayerTest {
             + "          \"suit\": \"hearts\"\n"
             + "        },\n"
             + "        {\n"
-            + "          \"rank\": \"K\",\n"
+            + "          \"rank\": \"6\",\n"
             + "          \"suit\": \"spades\"\n"
             + "        }\n"
             + "      ]\n"
@@ -57,11 +57,11 @@ public class PlayerTest {
             + "      \"suit\": \"spades\"\n"
             + "    },\n"
             + "    {\n"
-            + "      \"rank\": \"A\",\n"
+            + "      \"rank\": \"J\",\n"
             + "      \"suit\": \"hearts\"\n"
             + "    },\n"
             + "    {\n"
-            + "      \"rank\": \"6\",\n"
+            + "      \"rank\": \"4\",\n"
             + "      \"suit\": \"clubs\"\n"
             + "    }\n"
             + "  ]\n"
@@ -70,6 +70,6 @@ public class PlayerTest {
     @Test
     public void testBetRequest() throws Exception {
         final GameState gameState = new JsonConverter<>(GameState.class).fromJson(testJson);
-        assertEquals(240, Player.betRequest(gameState));
+        assertEquals(480, Player.betRequest(gameState));
     }
 }

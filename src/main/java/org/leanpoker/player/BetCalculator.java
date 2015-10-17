@@ -6,9 +6,9 @@
 package org.leanpoker.player;
 
 import com.wcs.poker.gamestate.Card;
+import com.wcs.poker.gamestate.GameState;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 
 /**
  *
@@ -16,18 +16,23 @@ import javax.inject.Inject;
  */
 public class BetCalculator {
 
-    private HandValue handValue;
+    private HandValue handValueCalculator;
 
     public BetCalculator() {
-        handValue = new HandValue();
+        handValueCalculator = new HandValue();
     }
 
-    public void getCurrentBet(List<Card> cards) {
+    public boolean getCurrentBet(List<Card> cards) {
         List<Integer> cardValues = new ArrayList<>();
         for (Card card : cards) {
             cardValues.add(Cards.getValue(card.getRank()));
         }
-        handValue.getHandValue(cardValues);
+        Integer handValue = handValueCalculator.getHandValue(cardValues);
+        if (handValue >= 10) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
