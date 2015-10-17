@@ -70,6 +70,6 @@ public class PlayerTest {
     @Test
     public void testBetRequest() throws Exception {
         final GameState gameState = new JsonConverter<>(GameState.class).fromJson(testJson);
-        assertEquals(0, Player.betRequest(gameState));
+        assertEquals(240, Player.betRequest(gameState));
     }
 }
