@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "0.6";
+    static final String VERSION = "0.7";
     private static BetCalculator betCalculator;
 
     public static int betRequest(GameState gameState) {

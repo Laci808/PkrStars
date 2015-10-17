@@ -21,12 +21,16 @@ public class LogicFactory {
         int chips = gameState.getActualPlayer().getStack();
         int chipsOnDesk = gameState.getPot();
         int currentBuyIn = gameState.getCurrentBuyIn();
-
+        int bet = gameState.getActualPlayer().getBet();
         Logic logicToreturn = new Logic(1, 10);
         switch (cardsOnDesk) {
             case 0: {
                 if (currentBuyIn > chips / 4) {
                     logicToreturn = new Logic(1, 1);
+                } else {
+                    if (bet > 0) {
+                        logicToreturn = new Logic(0, 20);
+                    }
                 }
                 break;
             }
