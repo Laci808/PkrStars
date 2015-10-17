@@ -18,12 +18,16 @@ public class LogicFactory {
     public static Logic createLogic(GameState gameState) {
         List<Card> communityCards = gameState.getCommunityCards();
         int cardsOnDesk = communityCards.size();
-        int chips  = gameState.getActualPlayer().getStack();
+        int chips = gameState.getActualPlayer().getStack();
         int chipsOnDesk = gameState.getPot();
         int currentBuyIn = gameState.getCurrentBuyIn();
+
         Logic logicToreturn = new Logic(1, 10);
         switch (cardsOnDesk) {
             case 0: {
+                if (currentBuyIn > chips / 4) {
+                    logicToreturn = new Logic(1, 1);
+                }
                 break;
             }
             case 3: {

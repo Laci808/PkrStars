@@ -5,6 +5,7 @@
  */
 package org.leanpoker.player;
 
+import com.wcs.poker.gamestate.Card;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class HandValue {
 
     private Map<Integer, Integer> matchList = new TreeMap<>();
 
-    public Integer getHandValue(List<Integer> cardValues) {
+    public PokerHands getHandValue(List<Integer> cardValues) {
 
         for (Integer oneCard : cardValues) {
             Integer existingCard = matchList.get(oneCard);
@@ -29,12 +30,7 @@ public class HandValue {
             }
 
         }
-        PokerHands highest = getResult();
-        if (highest != null) {
-            return highest.getValue();
-        } else {
-            return 0;
-        }
+        return getResult();
     }
 
     private PokerHands getResult() {
@@ -79,7 +75,20 @@ public class HandValue {
                 }
             }
         }
+
         return highestValue;
+    }
+
+    public int getHandValueByRank(List<Card> cards) {
+        int val = 0;
+        for (Card card : cards) {
+            val += Cards.getValue(card.getRank());
+        }
+        if (val > 15) {
+            return PokerHands.PAIR.getValue();
+        } else {
+            return 0;
+        }
     }
 
     public enum PokerHands {

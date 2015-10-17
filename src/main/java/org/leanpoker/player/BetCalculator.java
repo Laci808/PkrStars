@@ -9,6 +9,7 @@ import com.wcs.poker.gamestate.Card;
 import com.wcs.poker.gamestate.GameState;
 import java.util.ArrayList;
 import java.util.List;
+import org.leanpoker.player.HandValue.PokerHands;
 
 /**
  *
@@ -22,13 +23,21 @@ public class BetCalculator {
         handValueCalculator = new HandValue();
     }
 
-    public int getCurrentBet(List<Card> cards) {
+    public int getCurrentBet(List<Card> commCards, List<Card> ownCards) {
+        List<Card> allCard = ownCards;
+        allCard.addAll(commCards);
         List<Integer> cardValues = new ArrayList<>();
-        for (Card card : cards) {
+        for (Card card : allCard) {
             cardValues.add(Cards.getValue(card.getRank()));
         }
-        Integer handValue = handValueCalculator.getHandValue(cardValues);
-        return handValue;
+        int returnValue = 0;
+        PokerHands handValue = handValueCalculator.getHandValue(cardValues);
+        if (handValue == null) {
+            returnValue = handValueCalculator.getHandValueByRank(ownCards);
+        } else {
+            returnValue = handValue.getValue();
+        }
+        return returnValue;
     }
 
 }

@@ -6,14 +6,12 @@ import java.util.List;
 
 public class Player {
 
-    static final String VERSION = "0.4";
+    static final String VERSION = "0.5";
     private static BetCalculator betCalculator;
 
     public static int betRequest(GameState gameState) {
-        List<Card> allCard = gameState.getActualPlayer().getHoleCards();
-        allCard.addAll(gameState.getCommunityCards());
         betCalculator = new BetCalculator();
-        int value = betCalculator.getCurrentBet(allCard);
+        int value = betCalculator.getCurrentBet(gameState.getActualPlayer().getHoleCards(),gameState.getCommunityCards());
         return calculateBetAmmount(LogicFactory.createLogic(gameState), value, gameState);
     }
 
